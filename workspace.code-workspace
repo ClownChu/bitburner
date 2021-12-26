@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.script": "javascript"
+		},
+		"bitburner.scriptRoot": "./src/",
+		"bitburner.fileWatcher.enable": true,
+		"bitburner.showPushSuccessNotification": true,
+		"bitburner.showFileWatcherEnabledNotification": true
+	}
+}

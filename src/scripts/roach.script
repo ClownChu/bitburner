@@ -1,0 +1,127 @@
+function iterateServersInHost(hostname, callback, currentDepth) {
+	if (typeof currentDepth === 'undefined') {
+		currentDepth = 1
+	}
+
+	if (currentDepth > args[0]) {
+		return true
+	}
+
+	var availableHostnames = []
+	if (hostname !== null) {
+		availableHostnames = scan(hostname)
+	} else {
+		availableHostnames = scan()
+	}
+
+	tprint("Available hostnames in network: " + availableHostnames)
+	
+	for (var i = 0; i < availableHostnames.length; i++) {
+		var hostname = availableHostnames[i]
+		if (hostname === 'home') {
+			continue
+		}
+
+		callback(hostname, currentDepth)
+	}
+}
+
+function stopAllHacks(hostname, currentDepth) {
+	killall(hostname)
+	
+	if (iteratedServers.indexOf(hostname) === -1) {
+		iteratedServers.push(hostname)
+		return iterateServersInHost(hostname, stopAllHacks, currentDepth + 1)
+	}
+	
+	return true
+}
+
+function startServerHack(hostname, currentDepth) {
+	var currentHackingLevel = getHackingLevel()
+	var requiredHackingLevel = getServerRequiredHackingLevel(hostname)
+
+	tprint("    " + hostname + " - Requires hacking level: " + requiredHackingLevel)
+
+	if (requiredHackingLevel > currentHackingLevel) {
+		tprint("CANNOT HACK")
+		return false
+	}
+
+	if (!hasRootAccess(hostname)) {
+		tprint("        No ROOT access, executing NUKE.exe")
+
+		var portsNeededForNuke = getServerNumPortsRequired(hostname)
+
+		if (portsNeededForNuke > 0) {
+			brutessh(hostname)
+		}
+		
+		if (portsNeededForNuke > 1) {
+			ftpcrack(hostname)
+		}
+		
+		if (portsNeededForNuke > 2) {
+			relaysmtp(hostname)
+		}
+		
+		if (portsNeededForNuke > 3) {
+			httpworm(hostname)
+		}
+		
+		if (portsNeededForNuke > 4) {
+			sqlinject(hostname)
+		}
+
+		nuke(hostname)
+
+		if (!hasRootAccess(hostname)) {
+			tprint("        STILL NO ROOT ACCESS!!!!")
+			return false
+		}
+	}
+
+	var scriptName = "/scripts/slave.script"
+	if (!isRunning(scriptName, hostname)) {
+		tprint("		Not hacking yet!")
+		killall(hostname)
+
+		tprint("		Copying " + scriptName + "...")
+		scp(scriptName, hostname)
+		exec(scriptName, hostname, 1)
+
+		var scriptUsedRAM = getScriptRam(scriptName, hostname)
+		var serverMaxRam = getServerMaxRam(hostname)
+		var maxThreads = Math.floor(serverMaxRam / scriptUsedRAM)
+		
+		killall(hostname)
+
+		tprint("		Server max RAM: " + serverMaxRam)
+		tprint("		Max threads: " + maxThreads)
+		tprint("		Starting hack.script - Threads: " + maxThreads)
+
+		exec(scriptName, hostname, maxThreads)
+	} else {
+		tprint("Already hacking!")
+	}
+
+	if (iteratedServers.indexOf(hostname) === -1) {
+		iteratedServers.push(hostname)
+		return iterateServersInHost(hostname, startServerHack, currentDepth + 1)
+	}
+
+	return true
+}
+
+iteratedServers = []
+iterateServersInHost(null, stopAllHacks)
+
+while (true) {
+	tprint("Starting bot execution...")
+
+	iteratedServers = []
+	iterateServersInHost(null, startServerHack)
+
+	tprint("Waiting 30s...")
+	sleep(30000)
+}
