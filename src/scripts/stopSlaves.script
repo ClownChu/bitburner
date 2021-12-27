@@ -1,0 +1,55 @@
+tprint(" ")
+tprint("// ---- KILLING SLAVE SCRIPTS")
+if (args.length > 0) {
+	tprint("	(")
+	for (var i = 0; i < args.length; i++) {
+		tprint("		" + args[i])
+	}
+	tprint("	)")
+}
+
+if (args.length < 1) {
+	throw new Error("	(maxSearchDepth) is expected")
+}
+
+function iterateServersInHost(hostname, callback, currentDepth) {
+	if (typeof currentDepth === 'undefined') {
+		currentDepth = 1
+	}
+
+	if (currentDepth > args[0]) {
+		return true
+	}
+
+	var availableHostnames = []
+	if (hostname !== null) {
+		availableHostnames = scan(hostname)
+	} else {
+		availableHostnames = scan()
+	}
+
+	tprint("	Available hostnames in network: " + availableHostnames)
+	
+	for (var i = 0; i < availableHostnames.length; i++) {
+		var hostname = availableHostnames[i]
+		if (hostname === 'home') {
+			continue
+		}
+
+		callback(hostname, currentDepth)
+	}
+}
+
+function stopAllHacks(hostname, currentDepth) {
+	killall(hostname)
+	
+	if (iteratedServers.indexOf(hostname) === -1) {
+		iteratedServers.push(hostname)
+		return iterateServersInHost(hostname, stopAllHacks, currentDepth + 1)
+	}
+	
+	return true
+}
+
+iteratedServers = []
+iterateServersInHost(null, stopAllHacks)

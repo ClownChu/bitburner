@@ -26,17 +26,6 @@ function iterateServersInHost(hostname, callback, currentDepth) {
 	}
 }
 
-function stopAllHacks(hostname, currentDepth) {
-	killall(hostname)
-	
-	if (iteratedServers.indexOf(hostname) === -1) {
-		iteratedServers.push(hostname)
-		return iterateServersInHost(hostname, stopAllHacks, currentDepth + 1)
-	}
-	
-	return true
-}
-
 function startServerHack(hostname, currentDepth) {
 	var currentHackingLevel = getHackingLevel()
 	var requiredHackingLevel = getServerRequiredHackingLevel(hostname)
@@ -54,22 +43,37 @@ function startServerHack(hostname, currentDepth) {
 		var portsNeededForNuke = getServerNumPortsRequired(hostname)
 
 		if (portsNeededForNuke > 0) {
+			if (!fileExists("BruteSSH.exe")) {
+				return false
+			}
 			brutessh(hostname)
 		}
 		
 		if (portsNeededForNuke > 1) {
+			if (!fileExists("FTPCrack.exe")) {
+				return false
+			}
 			ftpcrack(hostname)
 		}
 		
 		if (portsNeededForNuke > 2) {
+			if (!fileExists("relaySMTP.exe")) {
+				return false
+			}
 			relaysmtp(hostname)
 		}
 		
 		if (portsNeededForNuke > 3) {
+			if (!fileExists("HTTPWorm.exe")) {
+				return false
+			}
 			httpworm(hostname)
 		}
 		
 		if (portsNeededForNuke > 4) {
+			if (!fileExists("SQLInject.exe")) {
+				return false
+			}
 			sqlinject(hostname)
 		}
 
@@ -112,9 +116,6 @@ function startServerHack(hostname, currentDepth) {
 
 	return true
 }
-
-iteratedServers = []
-iterateServersInHost(null, stopAllHacks)
 
 while (true) {
 	tprint("Starting bot execution...")

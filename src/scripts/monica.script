@@ -1,0 +1,39 @@
+tprint(" ")
+tprint("                                     ▄▄         		")
+tprint("▀████▄     ▄███▀                     ██                 ")
+tprint("  ████    ████                                          ")
+tprint("  █ ██   ▄█ ██   ▄██▀██▄▀████████▄ ▀███  ▄██▀██ ▄█▀██▄  ")
+tprint("  █  ██  █▀ ██  ██▀   ▀██ ██    ██   ██ ██▀  ████   ██  ")
+tprint("  █  ██▄█▀  ██  ██     ██ ██    ██   ██ ██      ▄█████  ")
+tprint("  █  ▀██▀   ██  ██▄   ▄██ ██    ██   ██ ██▄    ▄█   ██  ")
+tprint("▄███▄ ▀▀  ▄████▄ ▀█████▀▄████  ████▄████▄█████▀▀████▀██▄")
+tprint("                          🤖                           ")
+tprint(" ")
+
+tprint("Calling stopSlaves.script...")
+run("/scripts/stopSlaves.script", 1, args[1])
+
+while (isRunning("/scripts/stopSlaves.script", getHostname(), args[1])) {
+	print("Waiting for /scripts/stopSlaves.script")
+	sleep(100)
+}
+
+while(true) {
+	tprint("Calling hacknet.script...")
+	//run("/scripts/hacknet.script", 1, args[2], args[3], args[4])
+
+	while (isRunning("/scripts/hacknet.script", getHostname(), args[2], args[3], args[4])) {
+		print("Waiting for /scripts/hacknet.script")
+		sleep(100)
+	}
+
+	tprint("Calling roach.script...")
+	run("/scripts/roach.script", 1, args[1])
+
+	while (isRunning("/scripts/roach.script", getHostname(), args[1])) {
+		print("Waiting for /scripts/roach.script")
+		sleep(100)
+	}
+
+	sleep(args[0] * 1000)
+}

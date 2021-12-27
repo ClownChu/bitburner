@@ -1,0 +1,85 @@
+tprint(" ")
+tprint("// ---- UPGRADING HACKNET NODES")
+if (args.length > 0) {
+	tprint("	(")
+	for (var i = 0; i < args.length; i++) {
+		tprint("		" + args[i])
+	}
+	tprint("	)")
+}
+
+if (args.length < 3) {
+	throw new Error("	(expectedNodeLevel, expectedNodeRAM, expectedNodeCores) are expected")
+}
+
+function purchaseMaxNodes() {
+	tprint("	Purchasing the maximum amount of nodes possible...")
+
+	while (hacknet.numNodes() < hacknet.maxNumNodes()) {
+		if (hacknet.getPurchaseNodeCost() > getServerMoneyAvailable("home")) {
+			break
+		}
+		var nodeId = hacknet.purchaseNode()
+		tprint("		PURCHASED HACKNET NODE #" + nodeId)
+		 
+	}
+	tprint("	... done")
+}
+
+function upgradeNodeLevel(nodeId, upgradeTo) {
+	tprint("		Upgrading level to " + upgradeTo)
+	var node = hacknet.getNodeStats(nodeId)
+	while (node.level < upgradeTo) {
+		if (hacknet.getLevelUpgradeCost(nodeId, 1) > getServerMoneyAvailable("home")) {
+			break
+		}
+		
+		hacknet.upgradeLevel(nodeId, 1)
+		node = hacknet.getNodeStats(nodeId)
+
+		tprint("			UPGRADED LEVEL TO " + node.level)
+	}
+	tprint("		... done")
+}
+
+function upgradeNodeRAM(nodeId, upgradeTo) {
+	tprint("		Upgrading RAM to " + upgradeTo)
+	var node = hacknet.getNodeStats(nodeId)
+	while (node.ram < upgradeTo) {
+		if (hacknet.getRamUpgradeCost(nodeId, 1) > getServerMoneyAvailable("home")) {
+			break
+		}
+		
+		hacknet.upgradeRam(nodeId, 1);
+		node = hacknet.getNodeStats(nodeId)
+		tprint("			UPGRADED RAM TO " + node.ram)
+	}
+	tprint("		... done")
+}
+
+function upgradeNodeCores(nodeId, upgradeTo) {
+	tprint("		Upgrading Cores to " + upgradeTo)
+	var node = hacknet.getNodeStats(nodeId)
+	while (node.cores < upgradeTo) {
+		if (hacknet.getCoreUpgradeCost(nodeId, 1) > getServerMoneyAvailable("home")) {
+			break
+		}
+		
+		hacknet.upgradeCore(nodeId, 1);
+		node = hacknet.getNodeStats(nodeId)
+		tprint("			UPGRADED CORES TO " + node.cores)
+	}
+	tprint("		... done")
+}
+
+purchaseMaxNodes()
+for (var i = 0; i < hacknet.numNodes(); i++) {
+	tprint("	** NODE #" + i)
+	upgradeNodeLevel(i, args[0])
+	upgradeNodeRAM(i, args[1])
+	upgradeNodeCores(i, args[2])
+	tprint(" ")
+}
+
+tprint("DONE UPGRADING HACKNET NODES ---- //")
+tprint(" ")

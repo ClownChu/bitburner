@@ -14,8 +14,7 @@
 
 ```objc
 - [ ] Use NS scripts
-- [ ] Create script deployer
-- [ ] Create scripts to manage Hacknet Nodes
+- [ ] Create scripts to manage "home" and additional "purchasable" servers (can you believe you can upgrade home and new servers?!!)
 - [ ] TODOs in code // https://github.com/ClownChu/bitburner/search?q=TODO+%3A
 ```
 
@@ -27,4 +26,7 @@
 - [x] Fix base64 encoding in "filePush" of Visual Studio Code extension (https://github.com/hexnaught/vscode-bitburner-connector)
 - [x] Create script capable of finding and attacking servers
 - [x] Create script to hack servers taking into account the security and money available
+- [x] Create scripts to manage Hacknet Nodes
+- [x] Create Monica (assistant)
+- [x] Create script deployer (using VS Code extension vscode-bitburner-connector)
 ```
