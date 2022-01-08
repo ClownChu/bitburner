@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "hexnaught.vscode-bitburner-connector"
+        "dbaeumer.vscode-eslint",
+        "Gruntfuggly.auto-snippet",
+        "bitburner.bitburner-vscode-integration"
     ]
 }

@@ -8,12 +8,22 @@
 
 <hr>
 
+
+<h2 id="installation" align="center">Installation</h2>
+
+```
+git clone https://github.com/ClownChu/bitburner.git
+npm install
+npm run defs
+```
+
+<hr>
+
 <h2 id="todos" align="center">TODOs</h2>
 
 <h3 id="pending">Pending</h3>
 
 ```objc
-- [ ] Use NS scripts
 - [ ] Play with the `Stock Market`
 - [ ] Create scripts to manage "home" and additional "purchasable" servers (can you believe you can upgrade home and new servers?!!)
 - [ ] TODOs in code // https://github.com/ClownChu/bitburner/search?q=TODO+%3A
@@ -24,6 +34,8 @@
 <h3 id="completed">Completed</h3>
 
 ```objc
+- [x] Use TypeScript
+- [x] Use NS scripts
 - [x] Remove Visual Studio Code extension workaround
 - [x] Fix base64 encoding in "filePush" of Visual Studio Code extension (https://github.com/hexnaught/vscode-bitburner-connector)
 - [x] Create script capable of finding and attacking servers
@@ -32,3 +44,12 @@
 - [x] Create Monica (assistant)
 - [x] Create script deployer (using VS Code extension vscode-bitburner-connector)
 ```
+
+<h2 id="references" align="center">References</h2>
+<ul>
+    </li>
+        - Scripts are using TypeScript based on <a href="https://github.com/SlyCedix/bitburner-typescript-template" target="_blank">SlyCedix/bitburner-typescript-template</a> (Read <a href="https://github.com/SlyCedix/bitburner-typescript-template#how-to-use-this-template">How to use the tempalte</a> for more information about template usage and <code>watcher.js`</code>)
+    </li>
+</ul>
+
+<hr>
