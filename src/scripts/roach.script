@@ -1,9 +1,5 @@
-function iterateServersInHost(hostname, callback, currentDepth) {
-	if (typeof currentDepth === 'undefined') {
-		currentDepth = 1
-	}
-
-	if (currentDepth > args[0]) {
+function iterateServersInHost(hostname, callback, currentDepth, maxDepth) {
+	if (currentDepth > maxDepth) {
 		return true
 	}
 
@@ -14,7 +10,7 @@ function iterateServersInHost(hostname, callback, currentDepth) {
 		availableHostnames = scan()
 	}
 
-	tprint("Available hostnames in network: " + availableHostnames)
+	print("Available hostnames in network: " + availableHostnames)
 	
 	for (var i = 0; i < availableHostnames.length; i++) {
 		var hostname = availableHostnames[i]
@@ -22,23 +18,23 @@ function iterateServersInHost(hostname, callback, currentDepth) {
 			continue
 		}
 
-		callback(hostname, currentDepth)
+		callback(hostname, currentDepth, maxDepth)
 	}
 }
 
-function startServerHack(hostname, currentDepth) {
+function startServerHack(hostname, currentDepth, maxDepth) {
 	var currentHackingLevel = getHackingLevel()
 	var requiredHackingLevel = getServerRequiredHackingLevel(hostname)
 
-	tprint("    " + hostname + " - Requires hacking level: " + requiredHackingLevel)
+	print("    " + hostname + " - Requires hacking level: " + requiredHackingLevel)
 
 	if (requiredHackingLevel > currentHackingLevel) {
-		tprint("CANNOT HACK")
+		print("CANNOT HACK")
 		return false
 	}
 
 	if (!hasRootAccess(hostname)) {
-		tprint("        No ROOT access, executing NUKE.exe")
+		print("        No ROOT access, executing NUKE.exe")
 
 		var portsNeededForNuke = getServerNumPortsRequired(hostname)
 
@@ -80,17 +76,17 @@ function startServerHack(hostname, currentDepth) {
 		nuke(hostname)
 
 		if (!hasRootAccess(hostname)) {
-			tprint("        STILL NO ROOT ACCESS!!!!")
+			print("        STILL NO ROOT ACCESS!!!!")
 			return false
 		}
 	}
 
 	var scriptName = "/scripts/slave.script"
 	if (!isRunning(scriptName, hostname)) {
-		tprint("		Not hacking yet!")
+		print("		Not hacking yet!")
 		killall(hostname)
 
-		tprint("		Copying " + scriptName + "...")
+		print("		Copying " + scriptName + "...")
 		scp(scriptName, hostname)
 		exec(scriptName, hostname, 1)
 
@@ -100,29 +96,40 @@ function startServerHack(hostname, currentDepth) {
 		
 		killall(hostname)
 
-		tprint("		Server max RAM: " + serverMaxRam)
-		tprint("		Max threads: " + maxThreads)
-		tprint("		Starting hack.script - Threads: " + maxThreads)
+		print("		Server max RAM: " + serverMaxRam)
+		print("		Max threads: " + maxThreads)
+		print("		Starting hack.script - Threads: " + maxThreads)
 
 		exec(scriptName, hostname, maxThreads)
 	} else {
-		tprint("Already hacking!")
+		print("Already hacking!")
 	}
 
 	if (iteratedServers.indexOf(hostname) === -1) {
 		iteratedServers.push(hostname)
-		return iterateServersInHost(hostname, startServerHack, currentDepth + 1)
+		return iterateServersInHost(hostname, startServerHack, currentDepth + 1, maxDepth)
 	}
 
 	return true
 }
 
-while (true) {
-	tprint("Starting bot execution...")
+print(" ")
+print("// ---- ROACHING")
 
-	iteratedServers = []
-	iterateServersInHost(null, startServerHack)
-
-	tprint("Waiting 30s...")
-	sleep(30000)
+if (args.length > 0) {
+	print("	(")
+	for (var i = 0; i < args.length; i++) {
+		print("		" + args[i])
+	}
+	print("	)")
 }
+
+if (args.length < 1) {
+	throw new Error("	(maxServerSearchDepth) is expected")
+}
+
+iteratedServers = []
+iterateServersInHost(null, startServerHack, 1, args[0])
+
+print("DONE ---- //")
+print(" ")

@@ -1,21 +1,7 @@
-tprint(" ")
-tprint("// ---- UPGRADING HACKNET NODES")
-if (args.length > 0) {
-	tprint("	(")
-	for (var i = 0; i < args.length; i++) {
-		tprint("		" + args[i])
-	}
-	tprint("	)")
-}
+function purchaseNodes(maxNodes) {
+	print("	Purchasing the maximum amount of nodes possible...")
 
-if (args.length < 3) {
-	throw new Error("	(expectedNodeLevel, expectedNodeRAM, expectedNodeCores) are expected")
-}
-
-function purchaseMaxNodes() {
-	tprint("	Purchasing the maximum amount of nodes possible...")
-
-	while (hacknet.numNodes() < hacknet.maxNumNodes()) {
+	while (hacknet.numNodes() < maxNodes) {
 		if (hacknet.getPurchaseNodeCost() > getServerMoneyAvailable("home")) {
 			break
 		}
@@ -23,11 +9,11 @@ function purchaseMaxNodes() {
 		tprint("		PURCHASED HACKNET NODE #" + nodeId)
 		 
 	}
-	tprint("	... done")
+	print("	... done")
 }
 
 function upgradeNodeLevel(nodeId, upgradeTo) {
-	tprint("		Upgrading level to " + upgradeTo)
+	print("		Upgrading level to " + upgradeTo)
 	var node = hacknet.getNodeStats(nodeId)
 	while (node.level < upgradeTo) {
 		if (hacknet.getLevelUpgradeCost(nodeId, 1) > getServerMoneyAvailable("home")) {
@@ -37,13 +23,13 @@ function upgradeNodeLevel(nodeId, upgradeTo) {
 		hacknet.upgradeLevel(nodeId, 1)
 		node = hacknet.getNodeStats(nodeId)
 
-		tprint("			UPGRADED LEVEL TO " + node.level)
+		print("			UPGRADED LEVEL TO " + node.level)
 	}
-	tprint("		... done")
+	print("		... done")
 }
 
 function upgradeNodeRAM(nodeId, upgradeTo) {
-	tprint("		Upgrading RAM to " + upgradeTo)
+	print("		Upgrading RAM to " + upgradeTo)
 	var node = hacknet.getNodeStats(nodeId)
 	while (node.ram < upgradeTo) {
 		if (hacknet.getRamUpgradeCost(nodeId, 1) > getServerMoneyAvailable("home")) {
@@ -52,13 +38,13 @@ function upgradeNodeRAM(nodeId, upgradeTo) {
 		
 		hacknet.upgradeRam(nodeId, 1);
 		node = hacknet.getNodeStats(nodeId)
-		tprint("			UPGRADED RAM TO " + node.ram)
+		print("			UPGRADED RAM TO " + node.ram)
 	}
-	tprint("		... done")
+	print("		... done")
 }
 
 function upgradeNodeCores(nodeId, upgradeTo) {
-	tprint("		Upgrading Cores to " + upgradeTo)
+	print("		Upgrading Cores to " + upgradeTo)
 	var node = hacknet.getNodeStats(nodeId)
 	while (node.cores < upgradeTo) {
 		if (hacknet.getCoreUpgradeCost(nodeId, 1) > getServerMoneyAvailable("home")) {
@@ -67,19 +53,34 @@ function upgradeNodeCores(nodeId, upgradeTo) {
 		
 		hacknet.upgradeCore(nodeId, 1);
 		node = hacknet.getNodeStats(nodeId)
-		tprint("			UPGRADED CORES TO " + node.cores)
+		print("			UPGRADED CORES TO " + node.cores)
 	}
-	tprint("		... done")
+	print("		... done")
 }
 
-purchaseMaxNodes()
+print(" ")
+print("// ---- UPGRADING HACKNET NODES")
+if (args.length > 0) {
+	print("	(")
+	for (var i = 0; i < args.length; i++) {
+		print("		" + args[i])
+	}
+	print("	)")
+}
+
+if (args.length < 4) {
+	throw new Error("	(hacknetNodesNum, expectedNodeLevel, expectedNodeRAM, expectedNodeCores) are expected")
+}
+
+purchaseNodes(args[0])
+
 for (var i = 0; i < hacknet.numNodes(); i++) {
-	tprint("	** NODE #" + i)
-	upgradeNodeLevel(i, args[0])
-	upgradeNodeRAM(i, args[1])
-	upgradeNodeCores(i, args[2])
-	tprint(" ")
+	print("	** NODE #" + i)
+	upgradeNodeLevel(i, args[1])
+	upgradeNodeRAM(i, args[2])
+	upgradeNodeCores(i, args[3])
+	print(" ")
 }
 
-tprint("DONE UPGRADING HACKNET NODES ---- //")
-tprint(" ")
+print("DONE ---- //")
+print(" ")

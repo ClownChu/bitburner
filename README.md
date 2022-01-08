@@ -14,6 +14,7 @@
 
 ```objc
 - [ ] Use NS scripts
+- [ ] Play with the `Stock Market`
 - [ ] Create scripts to manage "home" and additional "purchasable" servers (can you believe you can upgrade home and new servers?!!)
 - [ ] TODOs in code // https://github.com/ClownChu/bitburner/search?q=TODO+%3A
 ```
@@ -23,6 +24,7 @@
 <h3 id="completed">Completed</h3>
 
 ```objc
+- [x] Remove Visual Studio Code extension workaround
 - [x] Fix base64 encoding in "filePush" of Visual Studio Code extension (https://github.com/hexnaught/vscode-bitburner-connector)
 - [x] Create script capable of finding and attacking servers
 - [x] Create script to hack servers taking into account the security and money available

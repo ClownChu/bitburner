@@ -1,3 +1,112 @@
+function iterateServersInHost(hostname, callback, currentDepth, maxDepth) {
+	if (currentDepth > maxDepth) {
+		return true
+	}
+
+	var availableHostnames = []
+	if (hostname !== null) {
+		availableHostnames = scan(hostname)
+	} else {
+		availableHostnames = scan()
+	}
+
+	print("Available hostnames in network: " + availableHostnames)
+	
+	for (var i = 0; i < availableHostnames.length; i++) {
+		var hostname = availableHostnames[i]
+		if (hostname === 'home') {
+			continue
+		}
+
+		callback(hostname, currentDepth, maxDepth)
+	}
+}
+
+function startServerHack(hostname, currentDepth, maxDepth) {
+	var currentHackingLevel = getHackingLevel()
+	var requiredHackingLevel = getServerRequiredHackingLevel(hostname)
+
+	print("    " + hostname + " - Requires hacking level: " + requiredHackingLevel)
+
+	if (requiredHackingLevel > currentHackingLevel) {
+		print("CANNOT HACK")
+		return false
+	}
+
+	if (!hasRootAccess(hostname)) {
+		print("        No ROOT access, executing NUKE.exe")
+
+		var portsNeededForNuke = getServerNumPortsRequired(hostname)
+
+		if (portsNeededForNuke > 0) {
+			if (!fileExists("BruteSSH.exe")) {
+				return false
+			}
+			brutessh(hostname)
+		}
+		
+		if (portsNeededForNuke > 1) {
+			if (!fileExists("FTPCrack.exe")) {
+				return false
+			}
+			ftpcrack(hostname)
+		}
+		
+		if (portsNeededForNuke > 2) {
+			if (!fileExists("relaySMTP.exe")) {
+				return false
+			}
+			relaysmtp(hostname)
+		}
+		
+		if (portsNeededForNuke > 3) {
+			if (!fileExists("HTTPWorm.exe")) {
+				return false
+			}
+			httpworm(hostname)
+		}
+		
+		if (portsNeededForNuke > 4) {
+			if (!fileExists("SQLInject.exe")) {
+				return false
+			}
+			sqlinject(hostname)
+		}
+
+		nuke(hostname)
+
+		if (!hasRootAccess(hostname)) {
+			print("        STILL NO ROOT ACCESS!!!!")
+			return false
+		}
+	}
+
+	var scriptName = "/scripts/slave.script"
+	if (!isRunning(scriptName, "home", hostname)) {
+		print("		Not hacking yet!")
+
+		var scriptUsedRAM = 2.4
+		var serverMaxRam = getServerMaxRam("home")
+		var maxThreads = Math.floor((serverMaxRam / scriptUsedRAM) / 20)
+		
+		print("		Server max RAM: " + serverMaxRam)
+		print("		Max threads: " + maxThreads)
+		print("		Starting hack.script - Threads: " + maxThreads)
+
+		exec(scriptName, "home", maxThreads, hostname)
+		print("HACKING " + hostname + "!")
+	} else {
+		print("Already hacking!")
+	}
+
+	if (iteratedServers.indexOf(hostname) === -1) {
+		iteratedServers.push(hostname)
+		return iterateServersInHost(hostname, startServerHack, currentDepth + 1, maxDepth)
+	}
+
+	return true
+}
+
 tprint(" ")
 tprint("                                     ▄▄         		")
 tprint("▀████▄     ▄███▀                     ██                 ")
@@ -10,30 +119,31 @@ tprint("▄███▄ ▀▀  ▄████▄ ▀█████▀▄█�
 tprint("                          🤖                           ")
 tprint(" ")
 
-tprint("Calling stopSlaves.script...")
-run("/scripts/stopSlaves.script", 1, args[1])
-
-while (isRunning("/scripts/stopSlaves.script", getHostname(), args[1])) {
-	print("Waiting for /scripts/stopSlaves.script")
-	sleep(100)
+if (args.length > 0) {
+	print("	(")
+	for (var i = 0; i < args.length; i++) {
+		print("		" + args[i])
+	}
+	print("	)")
 }
 
-while(true) {
-	tprint("Calling hacknet.script...")
-	//run("/scripts/hacknet.script", 1, args[2], args[3], args[4])
+if (args.length < 5) {
+	throw new Error("	(maxServerSearchDepth, hacknetNodesNum, expectedNodeLevel, expectedNodeRAM, expectedNodeCores) are expected")
+}
 
-	while (isRunning("/scripts/hacknet.script", getHostname(), args[2], args[3], args[4])) {
-		print("Waiting for /scripts/hacknet.script")
-		sleep(100)
+while (true) {
+	print("Starting iteration...")
+
+	if (!isRunning("/scripts/hacknet.script", "home", args[1], args[2], args[3], args[4])) {
+		exec("/scripts/hacknet.script", "home", 1, args[1], args[2], args[3], args[4])
 	}
 
-	tprint("Calling roach.script...")
-	run("/scripts/roach.script", 1, args[1])
-
-	while (isRunning("/scripts/roach.script", getHostname(), args[1])) {
-		print("Waiting for /scripts/roach.script")
-		sleep(100)
+	if (isRunning("/scripts/roach.script", "home", 1, args[0])) {
+		exec("/scripts/roach.script", "home", 1, args[0])
 	}
 
-	sleep(args[0] * 1000)
+	iteratedServers = []
+	iterateServersInHost(null, startServerHack, 1, args[0])
+
+	sleep(60 * 1000)
 }
