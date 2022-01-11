@@ -3,7 +3,6 @@
     "NetscriptDefinitions.d.ts",
     "src/**/*",
   ],
-
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
@@ -13,14 +12,14 @@
     "esModuleInterop": true,
     "sourceMap": false,
     "strict": true,
-
     "rootDir": "src/",
     "outDir": "dist/",
-    "baseUrl": "src/",
+    "baseUrl": "./src",
     "paths": {
       "/*.js": [ "*" ],
       "*.js": [ "*" ],
-      "@ns": ["../NetscriptDefinitions.d.ts"]
-    }
+      "@ns": ["../NetscriptDefinitions.d.ts"],
+    },
+    "allowSyntheticDefaultImports": true
   }
 }

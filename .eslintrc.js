@@ -5,6 +5,15 @@ module.exports = {
     es6: false,
   },
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts"]
+    },
+    // This part is required to work with eslint, the rest is already setup to use import
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 8,

@@ -1,6 +1,6 @@
 import { NS, ProcessInfo } from '@ns'
 
-export async function main(ns: NS): Promise<void> {
+export async function main(ns: NS) : Promise<void> {
     const hashes: any = {}
 
     const files = ns.ls('home', '.js')
@@ -41,7 +41,7 @@ export async function main(ns: NS): Promise<void> {
     }
 }
 
-const getHash = (input: string): number => {
+const getHash = (input: string) : number => {
     let hash = 0, i, chr
     if (input.length === 0) return hash
     for (i = 0; i < input.length; i++) {
