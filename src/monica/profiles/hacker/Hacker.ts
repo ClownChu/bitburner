@@ -13,17 +13,21 @@ export class Hacker implements IProfile {
     }
 
     constructor() {
-        this.getCurrentProfileStage()
+        this.identifyCurrentProfileStage()
     }
 
-    getCurrentProfileStage(): void {
+    identifyCurrentProfileStage(): void {
         this._stage = new NoobStage()
     }
 
     async Execute(): Promise<boolean> {
         return new Promise((resolve, reject) => {
+            if (!this.CanBeExecuted) {
+                reject(`Profile could not be executed in the current state`)
+            }
+            
+            this.Stage.
             resolve(true)
-            reject(`Failed`)
         })
     }
 }
