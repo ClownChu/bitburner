@@ -1,12 +1,12 @@
 import { IGameAction } from "/monica/definitions/IGameAction.js"
-import { IGameCondition } from "/monica/definitions/IGameCondition.js"
+import { GameCondition } from "../conditions/GameCondition.js"
 
 export class BuyHacknetNodes implements IGameAction {
     get Id(): string {
         return `BUY_HACKNET_NODES`
     }
 
-    get Conditions(): IGameCondition[] {
+    get Conditions(): GameCondition[] {
         return []
     }
 

@@ -32,6 +32,9 @@ class Monica {
         this._ns.tprint(" ")
     }
 
+    /**
+     * TODO : Monica should choose the profile and use multiple
+     */
     LoadProfile(profileType: string): Promise<IProfile> {
         let profile: IProfile
         switch (profileType) {

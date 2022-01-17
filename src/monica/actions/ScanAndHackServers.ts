@@ -1,12 +1,12 @@
 import { IGameAction } from "/monica/definitions/IGameAction.js"
-import { IGameCondition } from "/monica/definitions/IGameCondition.js"
+import { GameCondition } from "/monica/conditions/GameCondition.js"
 
 export class ScanAndHackServers implements IGameAction {
     get Id(): string {
         return `SCAN_AND_HACK_SERVERS`
     }
 
-    get Conditions(): IGameCondition[] {
+    get Conditions(): GameCondition[] {
         return []
     }
 

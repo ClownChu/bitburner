@@ -1,12 +1,16 @@
-export enum GameComponents {
-    SKILL_LEVEL
+type GameComponent = {
+    SKILL_LEVEL: SkillLevelComponents;
 }
 
-export enum SkillLevelComponents {
-    HACK,
-    STR,
-    DEF,
-    DEX,
-    AGI,
-    CHA
+type SkillLevelComponents = {
+    HACK;
+    STR;
+    DEF;
+    DEX;
+    AGI;
+    CHA;
+}
+
+export const GameComponents: GameComponent = {
+    SKILL_LEVEL = SkillLevelComponents
 }

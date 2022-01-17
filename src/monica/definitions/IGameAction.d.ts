@@ -1,7 +1,7 @@
-import { IGameCondition } from "/monica/definitions/IGameCondition.js"
+import { GameCondition } from "/monica/conditions/GameCondition.js"
 
 export interface IGameAction {
     Id: string;
-    Conditions: IGameCondition[];
+    Conditions: GameCondition[];
     Execute(): Promise<boolean>;
 }

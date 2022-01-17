@@ -3,7 +3,7 @@ import { BuyHacknetNodes } from "/monica/actions/BuyHacknetNodes.js"
 import { ScanAndHackServers } from "/monica/actions/ScanAndHackServers.js"
 import { IGameAction } from "/monica/definitions/IGameAction.js"
 import { IGameStage } from "/monica/definitions/IGameStage.js"
-import { IGameCondition } from "/monica/definitions/IGameCondition.js"
+import { GameCondition } from "/monica/conditions/GameCondition.js"
 
 export class NoobStage implements IGameStage {
     get Id(): string {
@@ -14,16 +14,16 @@ export class NoobStage implements IGameStage {
         return `Find and hack any server avaialable to make money`
     }
 
-    get Coniditions(): IGameCondition[] {
+    get Coniditions(): GameCondition[] {
         return [
-            
-        ] as IGameCondition[]
+
+        ] as GameCondition[]
     }
 
     get Actions(): IGameAction[] {
         return [
             new ScanAndHackServers(1),
-            new BuyHacknetNodes(5),
+            new BuyHacknetNodes(10),
             new UpdateHacknetNodes(100, 16, 1)
         ] as IGameAction[]
     }

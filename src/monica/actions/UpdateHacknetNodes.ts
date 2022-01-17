@@ -1,5 +1,5 @@
 import { IGameAction } from "/monica/definitions/IGameAction.js"
-import { IGameCondition } from "/monica/definitions/IGameCondition.js"
+import { IGameCondition } from "/monica/conditions/GameCondition.js"
 
 export class UpdateHacknetNodes implements IGameAction {
     get Id(): string {
