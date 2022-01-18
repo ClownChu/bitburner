@@ -1,17 +1,17 @@
 import { GameComponent } from "/monica/components/GameComponents.js"
 
 export abstract class GameCondition {
-    protected _id: string = null
+    protected _id: string
     get Id(): string {
-        return null
+        return this._id
     }
 
-    protected _component: GameComponent = null
+    protected _component: GameComponent
     get Component(): GameComponent {
         return this._component
     }
 
-    protected _expectations: string = null
+    protected _expectations: string
     get Expectations(): string {
         return this._expectations
     }

@@ -1,16 +1,30 @@
-type GameComponent = {
-    SKILL_LEVEL: SkillLevelComponents;
+export class GameComponent {
+    static SKILL_LEVEL: SkillLevelComponents
 }
 
 type SkillLevelComponents = {
-    HACK;
-    STR;
-    DEF;
-    DEX;
-    AGI;
-    CHA;
+    HACK: HACK;
+    STR: STRENGTH;
+    DEF: DEFENSE;
+    DEX: DEXTERITY;
+    AGI: AGILITY;
+    CHA: CHARISMA;
 }
 
-export const GameComponents: GameComponent = {
-    SKILL_LEVEL = SkillLevelComponents
+type HACK = {
+}
+
+type STRENGTH = {
+}
+
+type DEFENSE = {
+}
+
+type DEXTERITY = {
+}
+
+type AGILITY = {
+}
+
+type CHARISMA = {
 }

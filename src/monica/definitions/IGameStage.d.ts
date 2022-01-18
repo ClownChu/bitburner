@@ -1,9 +1,9 @@
 import { IGameAction } from "/monica/definitions/IGameAction.js"
-import { IGameCondition } from "/monica/definitions/IGameCondition.js"
+import { GameCondition } from "/monica/conditions/GameCondition.js"
 
 export interface IGameStage {
     Id: string;
     Objective: string;
-    Coniditions: IGameCondition[];
+    Coniditions: GameCondition[];
     Actions: IGameAction[];
 }

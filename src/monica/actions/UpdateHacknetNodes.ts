@@ -1,20 +1,20 @@
 import { IGameAction } from "/monica/definitions/IGameAction.js"
-import { IGameCondition } from "/monica/conditions/GameCondition.js"
+import { GameCondition } from "/monica/conditions/GameCondition.js"
 
 export class UpdateHacknetNodes implements IGameAction {
     get Id(): string {
         return `UPDATE_HACKNET_NODES`
     }
 
-    get Conditions(): IGameCondition[] {
+    get Conditions(): GameCondition[] {
         return []
     }
 
-    private expectedNodesLevel: int;
-    private expectedNodesRAM: int;
-    private expectedNodesCores: int;
+    private expectedNodesLevel: number;
+    private expectedNodesRAM: number;
+    private expectedNodesCores: number;
     
-    constructor(expectedNodesLevel: int, expectedNodesRAM: int, expectedNodesCores: int) {
+    constructor(expectedNodesLevel: number, expectedNodesRAM: number, expectedNodesCores: number) {
         this.expectedNodesLevel = expectedNodesLevel
         this.expectedNodesRAM = expectedNodesRAM
         this.expectedNodesCores = expectedNodesCores
@@ -22,12 +22,10 @@ export class UpdateHacknetNodes implements IGameAction {
 
     Execute(): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            if (profile === undefined) {
-                reject(
-                    new Error(`Stage could not be executed.`)
-                )
-            }
-            resolve(profile)
+            resolve(true)
+            reject(
+                new Error(`Stage could not be executed.`)
+            )
         })
     }
 }

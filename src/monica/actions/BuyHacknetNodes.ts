@@ -10,20 +10,18 @@ export class BuyHacknetNodes implements IGameAction {
         return []
     }
 
-    private expectedNodesCount: int;
+    private expectedNodesCount: number;
     
-    constructor(expectedNodesCount: int) {
+    constructor(expectedNodesCount: number) {
         this.expectedNodesCount = expectedNodesCount
     }
 
     Execute(): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            if (profile === undefined) {
-                reject(
-                    new Error(`Stage could not be executed.`)
-                )
-            }
-            resolve(profile)
+            resolve(true)
+            reject(
+                new Error(`Stage could not be executed.`)
+            )
         })
     }
 }

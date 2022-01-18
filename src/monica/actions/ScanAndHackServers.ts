@@ -10,20 +10,18 @@ export class ScanAndHackServers implements IGameAction {
         return []
     }
 
-    private scanMaxDepth: int;
+    private scanMaxDepth: number;
     
-    constructor(scanMaxDepth: int) {
+    constructor(scanMaxDepth: number) {
         this.scanMaxDepth = scanMaxDepth
     }
 
     Execute(): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            if (profile === undefined) {
-                reject(
-                    new Error(`Stage could not be executed.`)
-                )
-            }
-            resolve(profile)
+            resolve(true)
+            reject(
+                new Error(`Stage could not be executed.`)
+            )
         })
     }
 }

@@ -26,7 +26,6 @@ export class Hacker implements IProfile {
                 reject(`Profile could not be executed in the current state`)
             }
             
-            this.Stage.
             resolve(true)
         })
     }
