@@ -36,7 +36,7 @@ function upgradeNodeRAM(nodeId, upgradeTo) {
 			break
 		}
 		
-		hacknet.upgradeRam(nodeId, 1)
+		hacknet.upgradeRam(nodeId, 1);
 		node = hacknet.getNodeStats(nodeId)
 		print("			UPGRADED RAM TO " + node.ram)
 	}
@@ -51,7 +51,7 @@ function upgradeNodeCores(nodeId, upgradeTo) {
 			break
 		}
 		
-		hacknet.upgradeCore(nodeId, 1)
+		hacknet.upgradeCore(nodeId, 1);
 		node = hacknet.getNodeStats(nodeId)
 		print("			UPGRADED CORES TO " + node.cores)
 	}
