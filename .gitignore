@@ -1,10 +1,3 @@
 .vscode/*
 !.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/snippets.code-snippets
 *.code-workspace
-
-node_modules/
-dist/
-package-lock.json
-NetscriptDefinitions.d.ts
