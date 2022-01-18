@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "npx tsc -w",
-    "lint": "eslint . --ext .ts",
+    "ts:build": "npx tsc",
+    "ts:watch": "npx tsc -w",
+    "ts:lint": "eslint . --ext .ts",
     "defs": "node ./updateDefs.js"
   },
   "repository": {

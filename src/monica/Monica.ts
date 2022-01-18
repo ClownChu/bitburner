@@ -3,8 +3,6 @@ import { Deprecated } from '/monica/profiles/hacker/deprecated.js'
 import { IProfile } from '/monica/definitions/IProfile.js'
 import { Hacker } from '/monica/profiles/hacker/hacker.js'
 
-// run /monica/Monica.js deprecated 10 15 200 64 16 20
-
 export async function main(ns : NS) : Promise<void> {
     const monica = new Monica(ns)
 
