@@ -7,15 +7,13 @@ import { Hacker } from '/monica/profiles/hacker/hacker.js'
 
 export async function main(ns : NS) : Promise<void> {
     const monica = new Monica(ns)
-    monica.LoadProfile(
-        ns.args.at(0) as string
-    ).then((profile) => {
-        profile.Execute().then((result) => {
-            ns.tprint(`Profile execution result: ${result}`)
-        }, (err) => {
-            ns.tprint(err)
-        })
-    })
+
+    while (true) {
+        await monica.Start(
+            ns.args.at(0) as string
+        )
+        await ns.sleep(5 * 1000)
+    }
 }
 
 class Monica {
@@ -23,6 +21,9 @@ class Monica {
 
     constructor(ns : NS) {
         this._ns = ns
+
+        this._ns.disableLog('disableLog')
+        this._ns.disableLog('sleep')
         
         this._ns.tprint(" ")
         this._ns.tprint("                                     ▄▄                 ")
@@ -40,7 +41,7 @@ class Monica {
     /**
      * TODO : Monica should choose the profile and use multiple
      */
-    LoadProfile(profileType: string): Promise<IProfile> {
+    async Start(profileType: string): Promise<boolean> {
         let profile: IProfile = new Deprecated(this._ns)
         switch (profileType) {
             case "hacker":
@@ -52,13 +53,6 @@ class Monica {
                 break
         }
 
-        return new Promise((resolve, reject) => {
-            if (profile === undefined) {
-                reject(
-                    new Error(`Profile could not be identified by '${profileType}'`)
-                )
-            }
-            resolve(profile)
-        })
+        return profile.Execute()
     }
 }

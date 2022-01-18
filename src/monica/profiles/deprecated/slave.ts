@@ -5,6 +5,7 @@ export async function main(ns : NS) : Promise<void> {
     const slave: Slave = new Slave(ns)
     while (true) {
         await slave.Execute()
+        await ns.sleep(5 * 1000)
     }
 }
 

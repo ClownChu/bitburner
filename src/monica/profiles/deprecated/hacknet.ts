@@ -72,7 +72,7 @@ class Hacknet {
 
     UpgradeNodeCores(nodeId: number): void {
         let node = this._ns.hacknet.getNodeStats(nodeId)
-        while (node.ram < this._maxCores) {
+        while (node.cores < this._maxCores) {
             if (this._ns.hacknet.getCoreUpgradeCost(nodeId, 1) > this._ns.getServerMoneyAvailable("home")) {
                 break
             }

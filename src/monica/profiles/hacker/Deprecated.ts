@@ -40,7 +40,6 @@ export class Deprecated implements IProfile {
                 reject(`Profile could not be executed in the current state`)
             }
 
-            
             if (!this._ns.scriptRunning(`/monica/profiles/deprecated/hacknet.js`, `home`)) {
                 this._ns.exec(
                     `/monica/profiles/deprecated/hacknet.js`, 
@@ -50,6 +49,14 @@ export class Deprecated implements IProfile {
                     this._expectedHackenetLevel, 
                     this._expectedHackenetRAM, 
                     this._expectedHackenetCores
+                )
+            }
+            
+            if (!this._ns.scriptRunning(`/monica/profiles/deprecated/stock.js`, `home`)) {
+                this._ns.exec(
+                    `/monica/profiles/deprecated/stock.js`, 
+                    `home`, 
+                    1
                 )
             }
     
